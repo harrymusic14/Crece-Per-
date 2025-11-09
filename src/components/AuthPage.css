@@ -1,0 +1,373 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-in forwards;
+}
+
+.auth-container.visible {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  animation: slideInLeft 0.8s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.logo-container {
+  margin-bottom: 2rem;
+  animation: scaleIn 0.6s ease-out 0.3s backwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.auth-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+  animation: slideUp 0.6s ease-out 0.4s backwards;
+}
+
+.auth-subtitle {
+  font-size: 1rem;
+  color: #718096;
+  margin-bottom: 2rem;
+  animation: slideUp 0.6s ease-out 0.5s backwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+  animation: slideUp 0.6s ease-out 0.6s backwards;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group select { /* Aplicar estilos comunes a input y select */
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: #cbd5e0;
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #fc8181;
+}
+
+/* Estilos específicos para el select */
+.form-group select {
+  -webkit-appearance: none; /* Eliminar estilos por defecto del navegador */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%20197.2L159.9%2069.8c-4.8-4.8-12.5-4.8-17.3%200L5.4%20197.2c-4.8%204.8-4.8%2012.5%200%2017.3l8.2%208.2c4.8%204.8%2012.5%204.8%2017.3%200L146%20112.7l115.1%20115.1c4.8%204.8%2012.5%204.8%2017.3%200l8.2-8.2c4.7-4.8%204.7-12.5%200-17.3z%22%2F%3E%3C%2Fsvg%3E'); /* Flecha personalizada */
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  padding-right: 2.5rem; /* Espacio para la flecha */
+  /* Estilos para la barra de desplazamiento en el select (afecta el elemento visible, no el dropdown nativo) */
+  max-height: 50px; /* Altura máxima para el select visible */
+  overflow-y: auto; /* Habilita el scroll vertical si el contenido excede max-height */
+}
+
+.form-group select option[disabled] {
+  color: #a0aec0; /* Color para la opción deshabilitada */
+}
+
+.error-message {
+  display: block;
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  animation: shake 0.3s ease;
+}
+
+.api-error {
+  text-align: center;
+  margin-bottom: 1rem;
+  background-color: rgba(229, 62, 62, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-top: 0;
+}
+
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.submit-button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.auth-toggle {
+  margin-top: 1.5rem;
+  text-align: center;
+  animation: fadeIn 0.6s ease-out 0.7s backwards;
+}
+
+.auth-toggle p {
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #4299e1;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.toggle-button:hover {
+  color: #2b6cb0;
+  text-decoration: underline;
+}
+
+.carousel-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+}
+
+.carousel-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  /* Eliminamos la animación de movimiento y el escalado inicial */
+  transition: opacity 1.5s ease-in-out; /* Solo transición de opacidad */
+}
+
+.carousel-image.active {
+  opacity: 1;
+  /* Eliminamos la animación de movimiento */
+  animation: none; /* Aseguramos que no haya animaciones de movimiento */
+}
+
+/* Eliminamos la keyframe panImage ya que no se usa */
+/* @keyframes panImage {
+  from {
+    background-position: right center;
+  }
+  to {
+    background-position: left center;
+  }
+} */
+
+/* Estilos para el mensaje de registro exitoso */
+.registration-success-message {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #10b981; /* Color de éxito */
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInSlideUp 0.5s ease-out forwards, fadeOutSlideUp 0.5s ease-in 2.5s forwards;
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutSlideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+  }
+
+  .auth-card {
+    min-height: 100vh;
+  }
+
+  .carousel-container {
+    display: none;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  .auth-title {
+    font-size: 1.5rem;
+  }
+
+  .auth-form {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .auth-card {
+    flex: 0.8;
+  }
+
+  .carousel-container {
+    flex: 1.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-container,
+  .auth-card,
+  .logo-container,
+  .auth-title,
+  .auth-subtitle,
+  .auth-form,
+  .auth-toggle,
+  .carousel-image,
+  .registration-success-message {
+    animation: none;
+    transition: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    transform: none;
+  }
+
+  .submit-button:hover {
+    transform: none;
+  }
+}

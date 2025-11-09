@@ -1,0 +1,100 @@
+.image-carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px; /* Ajusta según sea necesario */
+  height: 450px; /* Altura fija para consistencia */
+  margin: 2rem auto;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background-color: var(--surface);
+}
+
+.carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1) translateX(0); /* Posición por defecto: escalada y centrada */
+}
+
+/* --- Animación combinada de Paneo y Deslizamiento --- */
+.carousel-image.active {
+  animation: pan-and-hold var(--pan-duration) linear forwards;
+}
+
+.carousel-image.exit {
+  animation: pan-and-slide-out 0.8s cubic-bezier(0.65, 0.05, 0.36, 1) forwards;
+}
+
+.carousel-image.enter {
+  animation: slide-in 0.8s cubic-bezier(0.65, 0.05, 0.36, 1) forwards;
+}
+
+/* Keyframes para la imagen activa (paneo y espera) */
+@keyframes pan-and-hold {
+  from {
+    transform: scale(1.1) translateX(var(--pan-start));
+  }
+  to {
+    transform: scale(1.1) translateX(var(--pan-end));
+  }
+}
+
+/* Keyframes para la imagen que sale (continúa el paneo y se desliza) */
+@keyframes pan-and-slide-out {
+  from {
+    transform: scale(1.1) translateX(var(--pan-end));
+  }
+  to {
+    transform: scale(1.1) translateX(var(--slide-to));
+  }
+}
+
+/* Keyframes para la imagen que entra (solo se desliza) */
+@keyframes slide-in {
+  from {
+    transform: scale(1.1) translateX(var(--slide-from));
+  }
+  to {
+    transform: scale(1.1) translateX(var(--pan-start));
+  }
+}
+
+
+/* Puntos del Carrusel */
+.carousel-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+  background-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}

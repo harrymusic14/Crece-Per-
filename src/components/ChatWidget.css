@@ -1,0 +1,270 @@
+.chat-widget-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem; /* Posición a la izquierda */
+  z-index: 1000;
+}
+
+.chat-bubble {
+  background: linear-gradient(135deg, #0078D7 0%, #005fa3 100%); /* Azul corporativo */
+  color: white;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 120, 215, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chat-bubble span {
+  font-size: 2.0rem; /* Aumenta el tamaño del ícono 💬 */
+}
+
+
+.chat-bubble:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 120, 215, 0.5);
+}
+
+.chat-window {
+  position: absolute;
+  bottom: 80px; /* bubble height + gap */
+  left: 0; /* Alineado con la burbuja */
+  width: 400px; /* --- ANCHO AUMENTADO --- */
+  height: 650px; /* --- ALTURA AUMENTADA --- */
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+  transform-origin: bottom left; /* Origen de la transformación */
+}
+
+.chat-window.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #0078D7 0%, #005fa3 100%); /* Azul corporativo */
+  color: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.close-chat-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.close-chat-btn:hover {
+  opacity: 1;
+}
+
+.chat-box {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: #f4f7f9; /* Fondo más claro */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* Reducido para agrupar mensajes de recomendación */
+}
+
+.message {
+  max-width: 85%; /* Un poco más de ancho para los mensajes */
+  padding: 0.75rem 1rem;
+  border-radius: 18px; /* Más redondeado */
+  line-height: 1.5; /* Mejor espaciado de línea */
+  word-wrap: break-word;
+  animation: fadeIn 0.3s ease;
+  white-space: pre-wrap; /* --- RESPETA SALTOS DE LÍNEA --- */
+}
+
+.message strong {
+  font-weight: 600; /* Asegura que la negrita sea visible */
+}
+
+.user-msg {
+  background: #0078D7; /* Azul corporativo */
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
+}
+
+.bot-msg {
+  background: #e2e8f0; /* Gris claro */
+  color: #2d3748; /* Texto oscuro */
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+}
+
+/* Estilo para el texto introductorio del bot antes de una tarjeta */
+.bot-msg .bot-intro-text {
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor del mensaje del bot cuando hay una recomendación */
+.bot-msg:has(.course-recommendation-card) {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-input {
+  display: flex;
+  padding: 1rem;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.chat-input textarea {
+  flex-grow: 1;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  outline: none;
+  resize: none; /* Deshabilitar redimensionamiento manual */
+  transition: border-color 0.2s;
+  min-height: 40px; /* Altura mínima */
+  max-height: 100px; /* Altura máxima para evitar que crezca demasiado */
+  overflow-y: auto; /* Scroll si el contenido excede la altura máxima */
+}
+
+.chat-input textarea:focus {
+  border-color: #0078D7; /* Azul corporativo al enfocar */
+}
+
+.chat-input button {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #0078D7; /* Azul corporativo */
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.chat-input button:hover {
+  background: #005fa3; /* Azul más oscuro al pasar el ratón */
+}
+
+.chat-input button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Estilos para la tarjeta de recomendación de curso */
+.course-recommendation-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 100%; /* Asegurar que no se desborde */
+  align-self: flex-start; /* Siempre alineado a la izquierda como mensaje del bot */
+  border: 1px solid #e2e8f0;
+  animation: fadeIn 0.3s ease; /* Añadir animación */
+}
+
+.course-recommendation-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.course-rec-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.course-rec-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.course-rec-content h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.course-rec-difficulty {
+  font-size: 0.85rem;
+  color: #718096;
+  margin: 0;
+}
+
+.course-rec-difficulty span {
+  font-weight: 600;
+  color: #0078D7; /* Color para la dificultad */
+}
+
+.course-rec-reason {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.4; /* Mejor espaciado */
+}
+
+.course-rec-button {
+  background: linear-gradient(135deg, #0078D7 0%, #005fa3 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  margin-top: 0.5rem;
+}
+
+.course-rec-button:hover {
+  background: linear-gradient(135deg, #005fa3 0%, #004a7c 100%);
+  transform: translateY(-1px);
+}

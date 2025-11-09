@@ -1,0 +1,437 @@
+@import '../styles/variables.css'; /* Importar variables de color */
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--background); /* Usar variable de la paleta */
+  color: var(--text); /* Usar variable de la paleta */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.homepage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--surface); /* Usar variable de la paleta */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada para el sticky header */
+  border-bottom: 1px solid var(--border); /* Usar variable de la paleta */
+  position: sticky; /* Hace el header pegajoso */
+  top: 0; /* Se pega en la parte superior */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+}
+
+.homepage-logo {
+  height: 50px; /* Aumentar el tamaño del logo */
+  transition: transform 0.3s ease;
+}
+
+.homepage-logo:hover {
+  transform: scale(1.05);
+}
+
+.homepage-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2.5rem; /* Espacio entre los enlaces */
+}
+
+.homepage-nav a {
+  color: var(--textSecondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  position: relative;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.homepage-nav a:hover,
+.homepage-nav a:focus {
+  color: var(--primary); /* Color al pasar el ratón */
+  transform: translateY(-2px);
+}
+
+.homepage-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.homepage-nav a:hover::after,
+.homepage-nav a:focus::after {
+  width: 100%;
+}
+
+/* Estilos específicos para el enlace "Mi Progreso" */
+.nav-link-progress {
+  color: var(--success); /* Usar el color verde de la paleta */
+}
+
+.nav-link-progress:hover,
+.nav-link-progress:focus {
+  color: var(--success); /* Mantener el color verde en hover/focus */
+  transform: translateY(-2px);
+}
+
+.nav-link-progress::after {
+  background-color: var(--success); /* Subrayado verde */
+}
+
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative; /* Para posicionar la tarjeta de perfil */
+}
+
+.user-info-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.user-info-trigger:hover {
+  background: var(--border);
+}
+
+.user-info-trigger span {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.logout-button {
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--error); /* Usar variable de la paleta */
+  border: none;
+  border-radius: 10px; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logout-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+  background: #dc2626; /* Un rojo ligeramente más oscuro al hover */
+}
+
+.logout-icon {
+  color: var(--surface);
+}
+
+/* Profile Card Styles */
+.profile-card {
+  position: absolute;
+  top: calc(100% + 15px); /* Posicionar debajo del trigger */
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: slideIn 0.3s ease-out forwards;
+  z-index: 1001; /* Asegurar que esté por encima del header */
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-card-image-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid var(--primary);
+  transition: border-color 0.3s ease;
+}
+
+.profile-card-image-container:hover {
+  border-color: var(--secondary);
+}
+
+.profile-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--surface);
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-card-image-container:hover .profile-image-overlay {
+  opacity: 1;
+}
+
+.profile-card-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.profile-card-details p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: var(--textSecondary);
+}
+
+.profile-card-details strong {
+  color: var(--text);
+}
+
+.homepage-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-section {
+  padding: 6rem 2rem; /* Mayor padding para un look más espacioso */
+  background: radial-gradient(circle at top left, var(--background) 0%, var(--surface) 70%, var(--border) 100%); /* Fondo dinámico */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem; /* Mayor espacio entre elementos */
+  border-bottom: 1px solid var(--border);
+  text-align: center; /* Centrar el texto */
+}
+
+.hero-content {
+  max-width: 900px; /* Limitar el ancho del contenido para legibilidad */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-section h1 {
+  font-size: 4.5rem; /* Título más grande e impactante */
+  margin-bottom: 0.5rem;
+  font-weight: 900; /* Más audaz */
+  color: var(--text);
+  letter-spacing: -0.08em; /* Espaciado de letras más ajustado */
+  line-height: 1.1;
+  background: linear-gradient(90deg, var(--primary), var(--secondary)); /* Texto con degradado */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-section p {
+  font-size: 1.6rem; /* Párrafo más grande */
+  color: var(--textSecondary);
+  max-width: 700px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.hero-cta-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--surface);
+  background: linear-gradient(45deg, var(--primary), var(--secondary)); /* Botón con degradado */
+  border: none;
+  border-radius: 12px; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3); /* Sombra más fuerte */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-cta-button:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4); /* Sombra mejorada al pasar el ratón */
+  background: linear-gradient(45deg, var(--secondary), var(--primary)); /* Degradado inverso al pasar el ratón */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .homepage-header {
+    padding: 0.8rem 1.5rem;
+  }
+  .homepage-logo {
+    height: 45px;
+  }
+  .homepage-nav ul {
+    gap: 1.8rem;
+  }
+  .homepage-nav a {
+    font-size: 1rem;
+  }
+  .user-actions {
+    gap: 1rem;
+  }
+  .user-info-trigger span {
+    font-size: 0.95rem;
+  }
+  .logout-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  .hero-section h1 {
+    font-size: 3.5rem;
+  }
+  .hero-section p {
+    font-size: 1.4rem;
+  }
+  .hero-cta-button {
+    padding: 0.9rem 2.2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-header {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+  }
+  .homepage-logo {
+    height: 40px;
+  }
+  .homepage-nav {
+    order: 3; /* Mover la navegación abajo en móviles */
+    width: 100%;
+    text-align: center;
+  }
+  .homepage-nav ul {
+    justify-content: center;
+    gap: 1.2rem;
+  }
+  .homepage-nav a {
+    font-size: 0.9rem;
+  }
+  .user-actions {
+    order: 2;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .user-info-trigger {
+    padding: 0.4rem 0.6rem;
+  }
+  .user-info-trigger span {
+    font-size: 0.9rem;
+  }
+  .logout-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  .hero-section {
+    padding: 4rem 1rem;
+    gap: 1.5rem;
+  }
+  .hero-section h1 {
+    font-size: 2.8rem;
+  }
+  .hero-section p {
+    font-size: 1.2rem;
+  }
+  .hero-cta-button {
+    padding: 0.8rem 2rem;
+    font-size: 0.95rem;
+  }
+  .profile-card {
+    right: 50%;
+    transform: translateX(50%) translateY(-10px); /* Centrar la tarjeta en móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .homepage-nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .user-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .hero-section h1 {
+    font-size: 2.2rem;
+    letter-spacing: -0.05em;
+  }
+  .hero-section p {
+    font-size: 1rem;
+  }
+  .hero-cta-button {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.9rem;
+  }
+  .profile-card {
+    width: 90%; /* Ajustar ancho de la tarjeta en móviles */
+    left: 5%;
+    right: 5%;
+    transform: translateY(-10px);
+  }
+}

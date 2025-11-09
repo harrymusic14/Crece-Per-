@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "cd80",
+      "nombre": "Farid",
+      "email": "astraliumnetwork@gmail.com",
+      "password": "memo040703"
+    },
+    {
+      "id": "dafc",
+      "nombre": "Farid",
+      "email": "jesisfarid@gmail.com",
+      "password": "memo040703"
+    },
+    {
+      "id": "9306",
+      "nombre": "Pruebita",
+      "email": "jesisfaridd@gmail.com",
+      "password": "memo040703",
+      "carrera": "Ingeniería de Sistemas"
+    },
+    {
+      "id": "3207",
+      "nombre": "harry rodriguez huarcaya",
+      "email": "harry.rodriguez@usil.pe",
+      "password": "pollo1245",
+      "carrera": "Derecho"
+    }
+  ]
+}

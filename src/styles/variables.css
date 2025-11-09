@@ -1,0 +1,13 @@
+:root {
+  --primary: #6366F1; /* Indigo */
+  --secondary: #3B82F6; /* Blue */
+  --accent: #EC4899; /* Pink */
+  --background: #F9FAFB; /* Light Grayish White */
+  --surface: #FFFFFF; /* Pure White */
+  --text: #1F2937; /* Dark Gray */
+  --textSecondary: #6B7280; /* Medium Gray */
+  --border: #E5E7EB; /* Very Light Gray */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+}
