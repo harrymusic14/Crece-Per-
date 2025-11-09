@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+// ...existing code...
+import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
 import './AuthPage.css';
 
 interface FormData {
@@ -36,7 +37,7 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
   const [apiError, setApiError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
-  const [showOtherCareerInput, setShowOtherCareerInput] = useState(false); // Nuevo estado para mostrar input de "Otra carrera"
+  const [showOtherCareerInput, setShowOtherCareerInput] = useState(false);
 
   const images = [
     '/assets/transicion1.jpg',
@@ -147,7 +148,6 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
         newErrors.confirmPassword = 'Las contraseñas no coinciden';
       }
       
-      // Validación para carrera (select o input de "Otro...")
       if (!formData.carrera?.trim() || formData.carrera === 'Selecciona tu carrera') {
         newErrors.carrera = 'La carrera es requerida';
       }
@@ -157,7 +157,7 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setApiError(null);
 
@@ -216,7 +216,7 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
             setIsLogin(true);
             setFormData({ nombre: '', email: '', password: '', confirmPassword: '', carrera: '' });
             setErrors({});
-            setShowOtherCareerInput(false); // Resetear también el estado del input de "Otra carrera"
+            setShowOtherCareerInput(false);
           }, 3500);
 
         } catch (error) {
@@ -228,28 +228,26 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     if (name === 'carrera') {
       if (value === 'Otro...') {
         setShowOtherCareerInput(true);
-        setFormData(prev => ({ ...prev, [name]: '' })); // Limpiar carrera para que el input de "Otro" la llene
+        setFormData(prev => ({ ...prev, [name]: '' }));
       } else {
         setShowOtherCareerInput(false);
         setFormData(prev => ({ ...prev, [name]: value }));
       }
-    } else if (name === 'otherCareerInput') { // Nombre para el input de "Otra carrera"
+    } else if (name === 'otherCareerInput') {
       setFormData(prev => ({ ...prev, carrera: value }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
 
-    // Limpiar errores al cambiar el input
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
-    // Si se está escribiendo en el input de "Otra carrera", limpiar el error de "carrera"
     if (name === 'otherCareerInput' && errors.carrera) {
       setErrors(prev => ({ ...prev, carrera: '' }));
     }
@@ -261,7 +259,7 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
     setErrors({});
     setApiError(null);
     setShowRegistrationSuccess(false);
-    setShowOtherCareerInput(false); // Resetear también el estado del input de "Otra carrera"
+    setShowOtherCareerInput(false);
   };
 
   return (
@@ -302,7 +300,7 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
                   onChange={handleInputChange}
                   className={errors.carrera ? 'error' : ''}
                 >
-                  {peruvianCareers.map((career, _index) => (
+                  {peruvianCareers.map((career) => (
                     <option
                       key={career}
                       value={career}
@@ -389,10 +387,10 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
       </div>
 
       <div className="carousel-container">
-        {images.map((image, _index) => (
+        {images.map((image) => (
           <div
-            key={_index}
-            className={`carousel-image ${_index === currentImage ? 'active' : ''}`}
+            key={image}
+            className={`carousel-image ${images.indexOf(image) === currentImage ? 'active' : ''}`}
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}
@@ -400,3 +398,4 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
     </div>
   );
 }
+// ...existing code...

@@ -25,6 +25,13 @@
       "email": "harry.rodriguez@usil.pe",
       "password": "pollo1245",
       "carrera": "Derecho"
+    },
+    {
+      "id": "f62e",
+      "nombre": "harry",
+      "email": "harrymusicx14@gmail.com",
+      "password": "pollo1245",
+      "carrera": "Enfermería"
     }
   ]
 }

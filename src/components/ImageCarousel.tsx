@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import type { CSSProperties } from 'react';
 import './ImageCarousel.css';
 
 interface ImageCarouselProps {
@@ -11,17 +12,15 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
   const [prevSlideIndex, setPrevSlideIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<'left' | 'right'>('left');
   
-  // 🔧 Corregido: se reemplazó NodeJS.Timeout por ReturnType<typeof setTimeout>
+  // Se usa tipo compatible con navegador
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Función para avanzar automáticamente
   const advanceSlide = useCallback(() => {
     setDirection((prev) => (prev === 'left' ? 'right' : 'left'));
     setPrevSlideIndex(currentSlideIndex);
     setCurrentSlideIndex((prev) => (prev + 1) % images.length);
   }, [currentSlideIndex, images.length]);
 
-  // Efecto para controlar el auto-avance
   useEffect(() => {
     if (prevSlideIndex === null) {
       timeoutRef.current = setTimeout(advanceSlide, interval);
@@ -33,7 +32,6 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
     };
   }, [advanceSlide, interval, prevSlideIndex]);
 
-  // Función para la navegación manual
   const goToSlide = (idx: number) => {
     if (prevSlideIndex !== null || idx === currentSlideIndex) return;
 
@@ -47,7 +45,8 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
     setCurrentSlideIndex(idx);
   };
   
-  const getAnimationVariables = (_index: number) => {
+  // El parámetro index no se usa internamente; se deja con guion bajo para indicar intención
+  const getAnimationVariables = (_index: number): CSSProperties => {
     let panStart = '0%';
     let panEnd = '-5%';
     let slideFrom = '100%';
@@ -66,7 +65,7 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
       '--slide-from': slideFrom,
       '--slide-to': slideTo,
       '--pan-duration': `${interval}ms`,
-    } as React.CSSProperties;
+    } as unknown as CSSProperties;
   };
   
   const getClassName = (index: number) => {
@@ -109,3 +108,4 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
     </div>
   );
 }
+// ...existing code...
