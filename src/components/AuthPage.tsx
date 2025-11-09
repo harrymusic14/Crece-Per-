@@ -387,10 +387,10 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
       </div>
 
       <div className="carousel-container">
-        {images.map((image) => (
+        {images.map((image, index) => (
           <div
             key={image}
-            className={`carousel-image ${images.indexOf(image) === currentImage ? 'active' : ''}`}
+            className={`carousel-image ${index === currentImage ? 'active' : ''}`}
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}
