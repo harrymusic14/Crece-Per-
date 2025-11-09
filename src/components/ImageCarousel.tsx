@@ -11,7 +11,8 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
   const [prevSlideIndex, setPrevSlideIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<'left' | 'right'>('left');
   
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // 🔧 Corregido: se reemplazó NodeJS.Timeout por ReturnType<typeof setTimeout>
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Función para avanzar automáticamente
   const advanceSlide = useCallback(() => {
@@ -22,7 +23,6 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
 
   // Efecto para controlar el auto-avance
   useEffect(() => {
-    // No iniciar un nuevo temporizador si una transición manual está en curso
     if (prevSlideIndex === null) {
       timeoutRef.current = setTimeout(advanceSlide, interval);
     }
@@ -31,14 +31,12 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [advanceSlide, interval, prevSlideIndex]); // Se re-ejecuta cuando prevSlideIndex cambia
+  }, [advanceSlide, interval, prevSlideIndex]);
 
   // Función para la navegación manual
   const goToSlide = (idx: number) => {
-    // Prevenir clics si una transición ya está en marcha o si se hace clic en el punto activo
     if (prevSlideIndex !== null || idx === currentSlideIndex) return;
 
-    // Limpiar el temporizador actual para evitar un doble avance
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -49,8 +47,7 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
     setCurrentSlideIndex(idx);
   };
   
-  // Calcula las variables CSS para la animación
-  const getAnimationVariables = (index: number) => {
+  const getAnimationVariables = (_index: number) => {
     let panStart = '0%';
     let panEnd = '-5%';
     let slideFrom = '100%';
@@ -72,19 +69,11 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
     } as React.CSSProperties;
   };
   
-  // Determina la clase CSS para una imagen
   const getClassName = (index: number) => {
-    // Durante una transición
     if (prevSlideIndex !== null) {
-      if (index === currentSlideIndex) {
-        return 'carousel-image enter';
-      }
-      if (index === prevSlideIndex) {
-        return 'carousel-image exit';
-      }
-    }
-    // Estado estático (sin transición)
-    else if (index === currentSlideIndex) {
+      if (index === currentSlideIndex) return 'carousel-image enter';
+      if (index === prevSlideIndex) return 'carousel-image exit';
+    } else if (index === currentSlideIndex) {
       return 'carousel-image active';
     }
     return 'carousel-image';
@@ -101,7 +90,6 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
             className={getClassName(index)}
             style={getAnimationVariables(index)}
             onAnimationEnd={() => {
-              // Una vez que la animación de salida termina, resetea el prevSlideIndex
               if (index === prevSlideIndex) {
                 setPrevSlideIndex(null);
               }
@@ -114,7 +102,7 @@ export default function ImageCarousel({ images, interval = 5000 }: ImageCarousel
           <span
             key={idx}
             className={`dot ${idx === currentSlideIndex ? 'active' : ''}`}
-            onClick={() => goToSlide(idx)} // Añadido el evento onClick
+            onClick={() => goToSlide(idx)}
           ></span>
         ))}
       </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import './CoursesSection.css';
 import { courses } from '../data/courses';
 

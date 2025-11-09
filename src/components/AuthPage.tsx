@@ -302,7 +302,7 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
                   onChange={handleInputChange}
                   className={errors.carrera ? 'error' : ''}
                 >
-                  {peruvianCareers.map((career, index) => (
+                  {peruvianCareers.map((career, _index) => (
                     <option
                       key={career}
                       value={career}
@@ -389,10 +389,10 @@ export default function AuthPage({ onLoginSuccess }: AuthPageProps) {
       </div>
 
       <div className="carousel-container">
-        {images.map((image, index) => (
+        {images.map((image, _index) => (
           <div
-            key={index}
-            className={`carousel-image ${index === currentImage ? 'active' : ''}`}
+            key={_index}
+            className={`carousel-image ${_index === currentImage ? 'active' : ''}`}
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}
